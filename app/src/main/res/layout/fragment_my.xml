@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dbdbdb"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/myData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/myIcon"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="5dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            app:riv_border_color="#fff"
+            app:riv_border_width="1dp"
+            app:riv_corner_radius="15dp"
+            app:riv_oval="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="60dp"
+            android:layout_toRightOf="@+id/myIcon"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/myUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="蒋蒙"
+                android:textColor="#000"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/myAutograph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="曾经有个女的想改造我，结果她在最后只拆了我的零件，却再也没跟我装上…"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/nextimg" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/myPublish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="#fff"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="  我发布过"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/changeData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#fff"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="  修改资料"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/changePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="#fff"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="  修改密码"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/advice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#fff"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="  意见反馈"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/shareSoftware"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="#fff"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="  分享一下"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="#fff"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="  关于软件"
+        android:textColor="#000"
+        android:textSize="16sp" />
+</LinearLayout>

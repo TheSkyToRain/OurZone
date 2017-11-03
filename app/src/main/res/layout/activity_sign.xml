@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/toolbar"/>
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_margin="20dp"
+            android:src="@drawable/user"
+            android:scaleType="centerCrop"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/input_account"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:maxLength="11"
+            android:inputType="number"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="@color/thirdColor"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="用户名是11位的哦"
+            android:hint="请输入你的用户名"
+            app:met_maxCharacters="11"
+            app:met_clearButton="true"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_margin="20dp"
+            android:src="@drawable/password"
+            android:scaleType="centerCrop"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/input_password"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:maxLength="16"
+            android:inputType="textPassword"
+            app:met_baseColor="#000000"
+            app:met_primaryColor="@color/thirdColor"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="密码位数大于6位"
+            android:hint="请输入你的密码"
+            app:met_maxCharacters="16"
+            app:met_clearButton="true"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/signIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:background="@color/secondColor"
+            android:text=" Sign In "
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:background="@color/secondColor"
+            android:text="Sign Up"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+</LinearLayout>

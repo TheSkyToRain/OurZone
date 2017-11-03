@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/user_icon"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            app:riv_border_width="1dp"
+            app:riv_border_color="#fff"
+            app:riv_oval="true"
+            app:riv_corner_radius="15dp"/>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <TextView
+                android:id="@+id/user_name"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:text="蒋蒙"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/send_time"
+                android:textSize="12sp"
+                android:text="2017-11-23 20:30"
+                android:gravity="center_vertical"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/content_text"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:text="秋雨淅淅，想象着梅雨里红丸的滋味。秋烟渺渺，怀念春江花月夜。秋风飒飒，惦记春花烂漫。秋岚氤氲，眺望远山含黛，倾听小溪潺潺流淌的声响。秋波潋滟，我赞美天山雪莲花的纯净高雅。默默地背倚着秋山连绵，我摇深秋诗韵的小舟，划胭脂河粉色妩媚的波浪，蕴涵诗情画意的锦绣，将含情脉脉的万千心语托付云朵珍藏。我撑起婉约的竹篙，痴痴地面朝一水秋江，思绪一如既往地走进深秋，仿佛期盼行云流水巧渡爱的彼岸"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:src="@drawable/demo"
+        android:id="@+id/content_image"
+        android:scaleType="centerCrop"
+        android:elevation="3dp"
+        android:layout_marginTop="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="50dp"
+                android:id="@+id/likes"
+                android:scaleType="centerCrop"
+                android:src="@drawable/likes"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+            <TextView
+                android:id="@+id/like_num"
+                android:text="5"
+                android:textSize="20sp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/comment"
+                android:scaleType="centerCrop"
+                android:src="@drawable/comment"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+            <TextView
+                android:id="@+id/comment_num"
+                android:text="5"
+                android:textSize="20sp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        android:background="#e6e6e6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
+    </LinearLayout>
+</LinearLayout>
