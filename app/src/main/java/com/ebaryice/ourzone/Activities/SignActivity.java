@@ -3,6 +3,7 @@ package com.ebaryice.ourzone.Activities;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,12 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.toolbar_text)
     TextView toolbar_text;
 
+    @BindView(R.id.signUp)
+    Button signUp;
+
+    @BindView(R.id.signIn)
+    Button signIn;
+
     private String account,psw;
 
     @Override
@@ -46,6 +53,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
     protected void initialize() {
         toolbar_text.setText("注册或登录");
         btn_back.setVisibility(View.VISIBLE);
+        btn_back.setOnClickListener(this);
+        signIn.setOnClickListener(this);
+        signUp.setOnClickListener(this);
     }
 
     @Override

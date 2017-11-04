@@ -1,5 +1,6 @@
 package com.ebaryice.ourzone.Basics;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
@@ -28,4 +29,9 @@ public abstract class BaseFragment extends Fragment{
 
     protected abstract void initialize();
 
+    public void intent(Class<?> c){
+        Intent intent = new Intent();
+        intent.setClass(getActivity(),c);
+        getActivity().startActivity(intent);
+    }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="60dp"
     android:background="@drawable/toolbar_background"
     android:id="@+id/topbar">
     <ImageButton
@@ -9,16 +9,16 @@
         android:scaleType="centerCrop"
         android:src="@drawable/btn_back"
         android:backgroundTint="#00000000"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="18dp"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:visibility="gone"
         />
     <TextView
         android:id="@+id/toolbar_text"
-        android:textSize="20sp"
+        android:textSize="19sp"
         android:textColor="#fff"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="18dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:text="our zone"

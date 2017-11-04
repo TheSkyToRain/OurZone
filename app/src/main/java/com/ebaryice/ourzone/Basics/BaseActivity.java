@@ -1,6 +1,7 @@
 package com.ebaryice.ourzone.Basics;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+
     private Unbinder unbinder;
+    //gg...不能用啊
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,12 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public Activity getActivity(){
         return this;
+    }
+
+    public void intent(Class<?> c){
+        Intent intent = new Intent();
+        intent.setClass(getActivity(),c);
+        getActivity().startActivity(intent);
     }
 
     @Override

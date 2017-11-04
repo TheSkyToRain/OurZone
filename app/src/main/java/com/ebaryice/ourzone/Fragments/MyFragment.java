@@ -1,6 +1,5 @@
 package com.ebaryice.ourzone.Fragments;
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -23,11 +22,13 @@ import butterknife.BindViews;
  */
 
 public class MyFragment extends BaseFragment implements View.OnClickListener{
+
     @BindView(R.id.myIcon)
     RoundedImageView myIcon;
 
     @BindViews({R.id.toolbar_text, R.id.myUsername,R.id.myAutograph})
     List<TextView> textViewList;
+
     @BindView(R.id.myData)
     RelativeLayout relativeLayout;
 
@@ -54,19 +55,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
         textViewList.get(1).setText("请先登录");
         textViewList.get(2).setText("编辑个性签名");
         Glide.with(getActivity()).load(R.drawable.icon).into(myIcon);
-
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),SignActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
+        relativeLayout.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.myData:
+                intent(SignActivity.class);
+                break;
             case R.id.myPublish:
                 break;
             case R.id.changeData:
