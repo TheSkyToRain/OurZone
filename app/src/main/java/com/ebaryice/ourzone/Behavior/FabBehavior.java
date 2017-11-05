@@ -14,14 +14,14 @@ import android.view.animation.Interpolator;
  * Created by Ebaryice on 2017/10/31.
  */
 
-public class MyFabBehavior extends CoordinatorLayout.Behavior {
+public class FabBehavior extends CoordinatorLayout.Behavior {
     //快出慢进
     private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
 
     private float viewY;//控件到coordinatorLayout底部距离
     private boolean isAnimating = false;
 
-    public MyFabBehavior(Context context, AttributeSet attrs) {
+    public FabBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

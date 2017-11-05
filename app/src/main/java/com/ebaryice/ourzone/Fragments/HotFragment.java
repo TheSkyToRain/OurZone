@@ -64,7 +64,6 @@ public class HotFragment extends BaseFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         user = ((MainActivity)activity).getAVUser();
-        Log.d("discover",user.getObjectId());
     }
 
     private void refresh(){

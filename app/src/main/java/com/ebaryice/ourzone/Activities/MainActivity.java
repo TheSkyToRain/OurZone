@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initialize() {
-        bottomBar.setAutoHideEnabled(false);
+
         bottomBar.setMode(BottomNavigationBar.MODE_SHIFTING);
         bottomBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_RIPPLE);
         bottomBar.setBackgroundColor(BottomNavigationBar_Color);

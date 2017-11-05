@@ -3,19 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.ebaryice.ourzone.Activities.MainActivity">
-
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_navigation_height">
+        >
     </FrameLayout>
-
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        app:layout_behavior="com.ebaryice.ourzone.Behavior.BottomBehavior">
     </com.ashokvarma.bottomnavigation.BottomNavigationBar>
 </android.support.design.widget.CoordinatorLayout>
