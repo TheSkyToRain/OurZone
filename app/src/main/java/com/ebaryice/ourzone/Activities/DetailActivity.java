@@ -1,6 +1,7 @@
 package com.ebaryice.ourzone.Activities;
 
 import com.ebaryice.ourzone.Basics.BaseActivity;
+import com.ebaryice.ourzone.R;
 
 /**
  * Created by Ebaryice on 2017/11/2.
@@ -9,7 +10,7 @@ import com.ebaryice.ourzone.Basics.BaseActivity;
 public class DetailActivity extends BaseActivity {
     @Override
     protected int getContentViewId() {
-        return 0;
+        return R.layout.activity_detail;
     }
 
     @Override

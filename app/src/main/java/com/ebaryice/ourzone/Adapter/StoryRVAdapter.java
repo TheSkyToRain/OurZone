@@ -3,6 +3,7 @@ package com.ebaryice.ourzone.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVUser;
 import com.bumptech.glide.Glide;
 import com.ebaryice.ourzone.Activities.DetailActivity;
 import com.ebaryice.ourzone.Bean.StoryBean;
@@ -28,13 +30,13 @@ import butterknife.ButterKnife;
 public class StoryRVAdapter extends RecyclerView.Adapter<StoryRVAdapter.MyViewHolder>{
 
     private Context context;
-    private String userId;
+    private AVUser user;
     private List<StoryBean> beans;
 
-    public StoryRVAdapter(List<StoryBean> storyBeans,Context context,String userId){
+    public StoryRVAdapter(List<StoryBean> storyBeans, Context context, AVUser user){
         this.beans = storyBeans;
         this.context = context;
-        this.userId = userId;
+        this.user = user;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -50,15 +52,16 @@ public class StoryRVAdapter extends RecyclerView.Adapter<StoryRVAdapter.MyViewHo
         holder.time.setText(beans.get(position).getTime());
         Glide.with(context).load(beans.get(position).getIcon()).asBitmap().into(holder.icon);
         Glide.with(context).load(beans.get(position).getPicture()).into(holder.contentImg);
-        holder.like_num.setText(beans.get(position).getNum_like());
-        holder.comment_num.setText(beans.get(position).getNum_comment());
+        holder.like_num.setText(beans.get(position).getNum_like()+"");
+        holder.comment_num.setText(beans.get(position).getNum_comment()+"");
         //判断是否已经点赞过
-        if (beans.get(position).getUserLiked().contains(userId)){
-            Glide.with(context).load(R.drawable.like).into(holder.likes);
-        }else{
-            Glide.with(context).load(R.drawable.likes).into(holder.likes);
+        if (user!=null){
+            if (beans.get(position).getUserLiked().contains(user.getObjectId())){
+                Glide.with(context).load(R.drawable.like).into(holder.likes);
+            }else{
+                Glide.with(context).load(R.drawable.likes).into(holder.likes);
+            }
         }
-
         final StoryBean bean = beans.get(position);
         //点击评论跳转
         holder.comment.setOnClickListener(new View.OnClickListener() {
@@ -88,22 +91,26 @@ public class StoryRVAdapter extends RecyclerView.Adapter<StoryRVAdapter.MyViewHo
             }
         });
         //点赞
-        holder.likes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (bean.getUserLiked().contains(userId)){
-                    Toast.makeText(context,"你已经点过赞啦~",Toast.LENGTH_SHORT).show();
-                }else{
-                    Glide.with(context).load(R.drawable.like).into(holder.likes);
-                    holder.like_num.setText(bean.getNum_like()+1);
-                    notify();
-                    //网络后台操作
+        if (user == null){
+            Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show();
+        }else{
+            holder.likes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (bean.getUserLiked().contains(user.getObjectId())){
+                        Toast.makeText(context,"你已经点过赞啦~",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Glide.with(context).load(R.drawable.like).into(holder.likes);
+                        holder.like_num.setText(bean.getNum_like()+1);
+                        notify();
+                        //网络后台操作
 
 
 
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override

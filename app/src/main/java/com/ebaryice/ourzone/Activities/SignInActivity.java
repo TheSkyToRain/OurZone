@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
-import com.avos.avoscloud.SignUpCallback;
 import com.ebaryice.ourzone.Basics.BaseActivity;
 import com.ebaryice.ourzone.R;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -22,7 +21,7 @@ import butterknife.BindView;
  * Created by Ebaryice on 2017/10/31.
  */
 
-public class SignActivity extends BaseActivity implements View.OnClickListener {
+public class SignInActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.input_account)
     MaterialEditText input_account;
@@ -35,27 +34,25 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.toolbar_text)
     TextView toolbar_text;
-
-    @BindView(R.id.signUp)
-    Button signUp;
-
     @BindView(R.id.signIn)
     Button signIn;
+    @BindView(R.id.to_signUp)
+    TextView to_signUp;
 
     private String account,psw;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_sign;
+        return R.layout.activity_signin;
     }
 
     @Override
     protected void initialize() {
-        toolbar_text.setText("注册或登录");
+        toolbar_text.setText("登录");
         btn_back.setVisibility(View.VISIBLE);
         btn_back.setOnClickListener(this);
         signIn.setOnClickListener(this);
-        signUp.setOnClickListener(this);
+        to_signUp.setOnClickListener(this);
     }
 
     @Override
@@ -70,39 +67,14 @@ public class SignActivity extends BaseActivity implements View.OnClickListener {
                     signIn(account,psw);
                 }
                 break;
-            case R.id.signUp:
-                account = input_account.getText().toString();
-                psw = input_password.getText().toString();
-                if (account.isEmpty()||psw.isEmpty()){
-                    Toast.makeText(getActivity(),"请正确输入!",Toast.LENGTH_SHORT).show();
-                }else{
-                    signUp(account,psw);
-                }
-                break;
             case R.id.btn_back:
                 getActivity().finish();
                 break;
+            case R.id.to_signUp:
+                intent(SignUpActivity.class);
+                break;
             default:
         }
-    }
-
-    private void signUp(String account, String psw) {
-        AVUser user = new AVUser();
-        user.setUsername(account);
-        user.setPassword(psw);
-        user.put("nickname",account);
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(AVException e) {
-                if (e == null){
-                    Toast.makeText(getActivity(),"注册成功,点击登录吧",Toast.LENGTH_SHORT).show();
-                }else {
-                    Log.d("gg",e.toString());
-                    Toast.makeText(getActivity(),"该账号已被注册",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
     }
 
     private void signIn(final String account, final String psw) {

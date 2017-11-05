@@ -7,6 +7,8 @@ import android.graphics.Color;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.AVUser;
 import com.ebaryice.ourzone.Basics.BaseActivity;
 import com.ebaryice.ourzone.Fragments.DiscoveryFragment;
 import com.ebaryice.ourzone.Fragments.HotFragment;
@@ -36,13 +38,14 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initialize() {
+        bottomBar.setAutoHideEnabled(false);
         bottomBar.setMode(BottomNavigationBar.MODE_SHIFTING);
         bottomBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_RIPPLE);
         bottomBar.setBackgroundColor(BottomNavigationBar_Color);
-        bottomBar.addItem(new BottomNavigationItem(R.drawable.discovery,"发现").setActiveColor(BottomNavigationBar_Color))
-                .addItem(new BottomNavigationItem(R.drawable.hot,"热门").setActiveColor(BottomNavigationBar_Color))
-                .addItem(new BottomNavigationItem(R.drawable.message,"消息").setActiveColor(BottomNavigationBar_Color))
-                .addItem(new BottomNavigationItem(R.drawable.my,"我").setActiveColor(BottomNavigationBar_Color))
+        bottomBar.addItem(new BottomNavigationItem(R.drawable.discovery_bottom,"发现").setActiveColor(BottomNavigationBar_Color))
+                .addItem(new BottomNavigationItem(R.drawable.hot_bottom,"热门").setActiveColor(BottomNavigationBar_Color))
+                .addItem(new BottomNavigationItem(R.drawable.message_bottom,"消息").setActiveColor(BottomNavigationBar_Color))
+                .addItem(new BottomNavigationItem(R.drawable.me_bottom,"我").setActiveColor(BottomNavigationBar_Color))
                 .setFirstSelectedPosition(0)
                 .initialise();
         setDefaultFragment();
@@ -59,6 +62,11 @@ public class MainActivity extends BaseActivity {
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         Fragment fragment = fragments.get(position);
+//                        if (fragment.isAdded()){
+//                            ft.show(fragment);
+//                        }else{
+//                            ft.add(R.id.frameLayout,fragment);
+//                        }
                         ft.replace(R.id.frameLayout,fragment);
                         ft.commit();
                     }
@@ -101,4 +109,8 @@ public class MainActivity extends BaseActivity {
         return fragments;
     }
 
+    public AVUser getAVUser(){
+        AVOSCloud.initialize(getActivity(),"1gsStpMGOIbiVQJMJ7GRho1R-gzGzoHsz","pvXUhF0qEA7Jdo5K4knCxHDE");
+        return AVUser.getCurrentUser();
+    }
 }

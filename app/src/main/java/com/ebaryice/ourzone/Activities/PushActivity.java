@@ -78,7 +78,8 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
     private int tag = 0;
     private String imagePath = null;
     List<String> userLiked = new ArrayList<>();
-
+    private AVUser user;
+    private int isOnclick = 0;
 
     @Override
     protected int getContentViewId() {
@@ -91,6 +92,7 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
         back.setVisibility(View.VISIBLE);
         push_img.setOnClickListener(this);
         push.setOnClickListener(this);
+        user = AVUser.getCurrentUser();
     }
 
     @Override
@@ -99,24 +101,13 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
             case R.id.push_image:
                 showDialog(view);
                 break;
-
             case R.id.push:
                 contentText = push_text.getText().toString();
-                if (contentText.isEmpty()&&push_img.getDrawable().getCurrent().getConstantState()
-                        ==getResources().getDrawable(R.drawable.photo).getConstantState()){
-                    Toast.makeText(getActivity(),"亲爱的用户,你没有编辑哟",Toast.LENGTH_SHORT).show();
-                }else if (push_img.getDrawable().getCurrent().getConstantState()==
-                        getResources().getDrawable(R.drawable.photo).getConstantState()){
-                    try {
-                        upLoad(contentText,null);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }else if (push_img.getDrawable().getCurrent().getConstantState()!=
-                        getResources().getDrawable(R.drawable.photo).getConstantState()){
+                if (contentText.isEmpty() || isOnclick == 0){
+                    Toast.makeText(getActivity(),"你还没有编辑完整..",Toast.LENGTH_SHORT).show();
+                } else{
                     if (tag == 0){
                         try {
-                            Log.d("xxxxxx",getRealFilePath(this,imageUri));
                             upLoad(contentText,getRealFilePath(this,imageUri));
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -165,30 +156,25 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
-
-
-    private void upLoad(String contentText, String path) throws FileNotFoundException {
-        AVObject object = new AVObject("Story");
-        AVUser user = AVUser.getCurrentUser();
-        object.put("userId", user.getObjectId());
-        //object.put("userIcon",user.getAVFile("userIcon").getUrl());
-        object.put("username",user.getString("nickname"));
-        object.put("sendTime",getCurrentTime());
-        object.put("contentText",contentText);
-        object.put("contentImage",AVFile.withAbsoluteLocalPath("contentImage",path));
-        object.put("likes",0);
-        object.put("comments",0);
-        object.put("userLiked",userLiked);
-        object.saveInBackground(new SaveCallback() {
+    private void upLoad(final String contentText, String path) throws FileNotFoundException {
+        final AVFile file = AVFile.withAbsoluteLocalPath("contentImage",path);
+        file.saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
-                if (e == null){
-                    Log.d("12333","上传成功");
-                }
+                AVObject object = new AVObject("Story");
+                object.put("userId", user.getObjectId());
+                object.put("userIcon",user.getAVFile("userIcon").getUrl());
+                object.put("username",user.getString("nickname"));
+                object.put("sendTime",getCurrentTime());
+                object.put("contentText",contentText);
+                object.put("contentImage",file.getUrl());
+                object.put("likes",0);
+                object.put("comments",0);
+                object.put("userLiked",userLiked);
+                object.saveInBackground();
             }
         });
-
-
+        getActivity().finish();
     }
 
 
@@ -230,7 +216,7 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
         dialogWindow.setGravity( Gravity.BOTTOM);
         //获得窗体的属性
         WindowManager.LayoutParams layoutParams = dialogWindow.getAttributes();
-        layoutParams.y = 20;//设置Dialog距离底部的距离
+        layoutParams.y = 50;//设置Dialog距离底部的距离
         //将属性设置给窗体
         dialogWindow.setAttributes(layoutParams);
         dialog.show();
@@ -242,6 +228,7 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
         switch (requestCode){
             case TAKE_PHOTO:
                 if (resultCode == RESULT_CANCELED){
+                    isOnclick = 0;
                     Toast.makeText(PushActivity.this,"取消",Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -249,6 +236,7 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
                     try{
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
                         push_img.setImageBitmap(bitmap);
+                        isOnclick = 1;
                         dialog.dismiss();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -259,14 +247,17 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
             case CHOOSE_PHOTO:
                 if (resultCode == RESULT_OK){
                     if (Build.VERSION.SDK_INT>=19){
+                        isOnclick = 1;
                         // 4.4 及以上版本系统用该方法处理图片
                         handleImageOnKitkat(data);
                     }else {
+                        isOnclick = 1;
                         handleImageBeforeKitkat(data);
                     }
                     dialog.dismiss();
                 }
                 else if (resultCode == RESULT_CANCELED){
+                    isOnclick = 0;
                     Toast.makeText(this,"取消",Toast.LENGTH_SHORT).show();
                     return;
                 }

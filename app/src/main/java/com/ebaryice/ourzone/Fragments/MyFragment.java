@@ -1,5 +1,8 @@
 package com.ebaryice.ourzone.Fragments;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -7,7 +10,8 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.AVUser;
 import com.bumptech.glide.Glide;
-import com.ebaryice.ourzone.Activities.SignActivity;
+import com.ebaryice.ourzone.Activities.MainActivity;
+import com.ebaryice.ourzone.Activities.SignInActivity;
 import com.ebaryice.ourzone.Basics.BaseFragment;
 import com.ebaryice.ourzone.R;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -25,44 +29,45 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
 
     @BindView(R.id.myIcon)
     RoundedImageView myIcon;
-
     @BindViews({R.id.toolbar_text, R.id.myUsername,R.id.myAutograph})
     List<TextView> textViewList;
-
     @BindView(R.id.myData)
     RelativeLayout relativeLayout;
 
+    private AVUser user;
     @Override
     protected int getResourcesId() {return R.layout.fragment_my;}
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        user = ((MainActivity)activity).getAVUser();
+    }
+
+    @Override
     protected void initialize() {
         textViewList.get(0).setText("我");
-        AVUser user = AVUser.getCurrentUser();
         //有用户登录时
         if (user != null){
-            textViewList.get(1).setText(AVUser.getCurrentUser().getString("nickname"));
-            textViewList.get(2).setText(AVUser.getCurrentUser().getString("autograph"));
-            //检查头像
-            if (user.getAVFile("userIcon")==null){
-                Log.d("userIcon","没有设置头像");
-                Glide.with(getActivity()).load(R.drawable.icon).into(myIcon);
-            }else{
-                Glide.with(getActivity()).load(user.getAVFile("userIcon").getUrl()).asBitmap().override(100,100).into(myIcon);
-            }
+            textViewList.get(1).setText(user.getString("nickname"));
+            textViewList.get(2).setText(user.getString("autograph"));
+            Glide.with(getActivity()).load(user.getAVFile("userIcon").getUrl()).asBitmap().override(100,100).into(myIcon);
+        }else{
+            //无用户登录时
+            textViewList.get(1).setText("请先登录");
+            textViewList.get(2).setText("编辑个性签名");
+            Glide.with(getActivity()).load(R.drawable.icon).into(myIcon);
+            relativeLayout.setOnClickListener(this);
         }
-        //无用户登录时
-        textViewList.get(1).setText("请先登录");
-        textViewList.get(2).setText("编辑个性签名");
-        Glide.with(getActivity()).load(R.drawable.icon).into(myIcon);
-        relativeLayout.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.myData:
-                intent(SignActivity.class);
+                if (user==null){
+                    intent(SignInActivity.class);
+                }
                 break;
             case R.id.myPublish:
                 break;
@@ -79,4 +84,5 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
             default:
         }
     }
+
 }

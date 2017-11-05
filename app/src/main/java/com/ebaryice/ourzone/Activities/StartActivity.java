@@ -31,11 +31,9 @@ public class StartActivity extends BaseActivity {
 
     @Override
     protected void initialize() {
-
         Log.d("AVCloud","初始化成功");
         // 初始化参数依次为 this, AppId, AppKey
-        AVOSCloud.initialize(this,"1gsStpMGOIbiVQJMJ7GRho1R-gzGzoHsz","pvXUhF0qEA7Jdo5K4knCxHDE");
-
+        AVOSCloud.initialize(getActivity(),"1gsStpMGOIbiVQJMJ7GRho1R-gzGzoHsz","pvXUhF0qEA7Jdo5K4knCxHDE");
         SharedPreferences pref = getSharedPreferences("currenUser",MODE_PRIVATE);
         String username = pref.getString("username","");
         String password = pref.getString("password","");
