@@ -27,6 +27,10 @@ allprojects {
         maven {
             url "http://mvn.leancloud.cn/nexus/content/repositories/public"
         }
+        //PhotoView
+        maven {
+            url "https://jitpack.io"
+        }
     }
 }
 

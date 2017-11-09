@@ -24,6 +24,26 @@ public class StoryBean implements Serializable{
     private int num_comment;
     //点过赞的列表
     private List<String> userLiked;
+    //评论
+    private List<String> commentsList;
+    //story ID
+    private String objectId;
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
+
+    public List<String> getCommentsList() {
+        return commentsList;
+    }
+
+    public void setCommentsList(List<String> comments) {
+        this.commentsList = comments;
+    }
 
     public List<String> getUserLiked() {
         return userLiked;

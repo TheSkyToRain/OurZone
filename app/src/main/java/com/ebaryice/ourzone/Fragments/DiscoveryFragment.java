@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -75,7 +74,6 @@ public class DiscoveryFragment extends BaseFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         user = ((MainActivity)activity).getAVUser();
-        Log.d("discover",user.getObjectId());
     }
 
     private void refresh(){
@@ -94,6 +92,8 @@ public class DiscoveryFragment extends BaseFragment {
                     bean.setNum_like(list.get(i).getInt("likes"));
                     bean.setNum_comment(list.get(i).getInt("comments"));
                     bean.setUserLiked(list.get(i).getList("userLiked"));
+                    bean.setCommentsList(list.get(i).getList("commentsList"));
+                    bean.setObjectId(list.get(i).getObjectId());
                     storyBeans.add(bean);
                 }
                 adapter = new StoryRVAdapter(storyBeans,getActivity(),user);

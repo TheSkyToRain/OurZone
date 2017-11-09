@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
@@ -86,6 +85,8 @@ public class HotFragment extends BaseFragment {
                     bean.setNum_like(list.get(i).getInt("likes"));
                     bean.setNum_comment(list.get(i).getInt("comments"));
                     bean.setUserLiked(list.get(i).getList("userLiked"));
+                    bean.setCommentsList(list.get(i).getList("commentsList"));
+                    bean.setObjectId(list.get(i).getObjectId());
                     storyBeans.add(bean);
                 }
 

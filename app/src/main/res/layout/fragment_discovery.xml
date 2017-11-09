@@ -4,15 +4,13 @@
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <include layout="@layout/toolbar" />
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/discovery_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
-
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="@dimen/bottom_navigation_height">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/discovery_recyclerView"
             android:layout_width="match_parent"

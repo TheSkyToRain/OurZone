@@ -1,9 +1,10 @@
 package com.ebaryice.ourzone.Activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -12,7 +13,6 @@ import com.avos.avoscloud.AVUser;
 import com.ebaryice.ourzone.Basics.BaseActivity;
 import com.ebaryice.ourzone.Fragments.DiscoveryFragment;
 import com.ebaryice.ourzone.Fragments.HotFragment;
-import com.ebaryice.ourzone.Fragments.MessageFragment;
 import com.ebaryice.ourzone.Fragments.MyFragment;
 import com.ebaryice.ourzone.R;
 
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 
 public class MainActivity extends BaseActivity {
     //亮蓝色,主题色
@@ -30,6 +31,16 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.bottomBar)
     BottomNavigationBar bottomBar;
 
+    /**
+     * 上一次点击 back 键的时间
+     * 用于双击退出的判断
+     */
+    private static long lastBackTime = 0;
+
+    /**
+     * 当双击 back 键在此间隔内是直接触发 onBackPressed
+     */
+    private final int BACK_INTERVAL = 1000;
     @Override
     protected int getContentViewId() {
         return R.layout.activity_main;
@@ -59,7 +70,7 @@ public class MainActivity extends BaseActivity {
             public void onTabSelected(int position) {
                 if (fragments != null){
                     if (position < fragments.size()){
-                        FragmentManager fm = getFragmentManager();
+                        FragmentManager fm = getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         Fragment fragment = fragments.get(position);
 //                        if (fragment.isAdded()){
@@ -77,7 +88,7 @@ public class MainActivity extends BaseActivity {
             public void onTabUnselected(int position) {
                 if (fragments != null){
                     if (position < fragments.size()){
-                        FragmentManager fm = getFragmentManager();
+                        FragmentManager fm = getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         Fragment fragment = fragments.get(position);
                         ft.remove(fragment);
@@ -93,8 +104,19 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastBackTime < BACK_INTERVAL) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(this, "exit", Toast.LENGTH_SHORT).show();
+        }
+        lastBackTime = currentTime;
+    }
+
     private void setDefaultFragment() {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction tx = fm.beginTransaction();
         tx.add(R.id.frameLayout,new DiscoveryFragment());
         tx.commit();
@@ -104,7 +126,7 @@ public class MainActivity extends BaseActivity {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new DiscoveryFragment());
         fragments.add(new HotFragment());
-        fragments.add(new MessageFragment());
+        fragments.add(new LCIMConversationListFragment());
         fragments.add(new MyFragment());
         return fragments;
     }

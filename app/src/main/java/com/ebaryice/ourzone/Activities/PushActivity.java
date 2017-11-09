@@ -78,6 +78,7 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
     private int tag = 0;
     private String imagePath = null;
     List<String> userLiked = new ArrayList<>();
+    List<String> commentsList = new ArrayList<>();
     private AVUser user;
     private int isOnclick = 0;
 
@@ -171,6 +172,7 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
                 object.put("likes",0);
                 object.put("comments",0);
                 object.put("userLiked",userLiked);
+                object.put("commentsList",commentsList);
                 object.saveInBackground();
             }
         });

@@ -15,6 +15,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -71,6 +72,8 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initialize() {
+        //让布局向上移来显示软键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         toolbar_text.setText("注册");
         back.setVisibility(View.VISIBLE);
         signUp_icon.setOnClickListener(this);

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Our Zone</string>
+    <string name="likes">%1$d</string>
 </resources>

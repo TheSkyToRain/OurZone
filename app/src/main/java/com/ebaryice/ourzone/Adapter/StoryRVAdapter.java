@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.bumptech.glide.Glide;
 import com.ebaryice.ourzone.Activities.DetailActivity;
@@ -55,7 +56,7 @@ public class StoryRVAdapter extends RecyclerView.Adapter<StoryRVAdapter.MyViewHo
         holder.like_num.setText(beans.get(position).getNum_like()+"");
         holder.comment_num.setText(beans.get(position).getNum_comment()+"");
         //判断是否已经点赞过
-        if (user!=null){
+        if (user != null){
             if (beans.get(position).getUserLiked().contains(user.getObjectId())){
                 Glide.with(context).load(R.drawable.like).into(holder.likes);
             }else{
@@ -100,17 +101,24 @@ public class StoryRVAdapter extends RecyclerView.Adapter<StoryRVAdapter.MyViewHo
                     if (bean.getUserLiked().contains(user.getObjectId())){
                         Toast.makeText(context,"你已经点过赞啦~",Toast.LENGTH_SHORT).show();
                     }else{
+                        bean.getUserLiked().add(user.getObjectId());
+                        notifyDataSetChanged();
                         Glide.with(context).load(R.drawable.like).into(holder.likes);
-                        holder.like_num.setText(bean.getNum_like()+1);
-                        notify();
+                        Log.d("likelike",bean.getUserLiked().size()+"个");
+                        holder.like_num.setText(String.format(context.getResources().getString(R.string.likes),bean.getUserLiked().size()));
                         //网络后台操作
-
-
-
+                        updateCloud(bean.getObjectId(),bean.getNum_like()+1,bean.getUserLiked());
                     }
                 }
             });
         }
+    }
+
+    private void updateCloud(String id,int likes,List<String> userLiked){
+        AVObject todo = AVObject.createWithoutData("Story",id);
+        todo.put("likes",likes);
+        todo.put("userLiked",userLiked);
+        todo.saveInBackground();
     }
 
     @Override

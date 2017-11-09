@@ -38,6 +38,7 @@
         <activity android:name=".Activities.SignInActivity"/>
         <activity android:name=".Activities.DetailActivity"/>
         <activity android:name=".Activities.PushActivity"/>
+        <activity android:name=".Activities.PhotoDetailActivity"/>
         <activity android:name=".Activities.SignUpActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:screenOrientation="portrait"/>
