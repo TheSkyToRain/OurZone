@@ -2,6 +2,7 @@ package com.ebaryice.ourzone.Fragments;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
     List<TextView> textViewList;
     @BindView(R.id.myData)
     RelativeLayout relativeLayout;
+    @BindView(R.id.logOut)
+    Button logout;
 
     private AVUser user;
     @Override
@@ -43,6 +46,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     protected void initialize() {
+        logout.setOnClickListener(this);
         textViewList.get(0).setText("我");
         //有用户登录时
         if (user != null){
@@ -77,6 +81,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener{
             case R.id.about:
                 break;
             case R.id.shareSoftware:
+                break;
+            case R.id.logOut:
+                AVUser.getCurrentUser().logOut();
+                //无用户登录时
+                textViewList.get(1).setText("请先登录");
+                textViewList.get(2).setText("编辑个性签名");
+                Glide.with(getActivity()).load(R.drawable.icon).into(myIcon);
                 break;
             default:
         }

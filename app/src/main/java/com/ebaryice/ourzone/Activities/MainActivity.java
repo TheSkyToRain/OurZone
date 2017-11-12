@@ -49,7 +49,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initialize() {
-
         bottomBar.setMode(BottomNavigationBar.MODE_SHIFTING);
         bottomBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_RIPPLE);
         bottomBar.setBackgroundColor(BottomNavigationBar_Color);
@@ -59,8 +58,8 @@ public class MainActivity extends BaseActivity {
                 .addItem(new BottomNavigationItem(R.drawable.me_bottom,"我").setActiveColor(BottomNavigationBar_Color))
                 .setFirstSelectedPosition(0)
                 .initialise();
-        setDefaultFragment();
         fragments = getFragments();
+        setDefaultFragment(fragments);
         setBottomBar();
     }
 
@@ -73,12 +72,11 @@ public class MainActivity extends BaseActivity {
                         FragmentManager fm = getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         Fragment fragment = fragments.get(position);
-//                        if (fragment.isAdded()){
-//                            ft.show(fragment);
-//                        }else{
-//                            ft.add(R.id.frameLayout,fragment);
-//                        }
-                        ft.replace(R.id.frameLayout,fragment);
+                        if (fragment.isAdded()){
+                            ft.show(fragment);
+                        }else{
+                            ft.add(R.id.frameLayout,fragment);
+                        }
                         ft.commit();
                     }
                 }
@@ -91,7 +89,7 @@ public class MainActivity extends BaseActivity {
                         FragmentManager fm = getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         Fragment fragment = fragments.get(position);
-                        ft.remove(fragment);
+                        ft.hide(fragment);
                         ft.commit();
                     }
                 }
@@ -115,10 +113,10 @@ public class MainActivity extends BaseActivity {
         lastBackTime = currentTime;
     }
 
-    private void setDefaultFragment() {
+    private void setDefaultFragment(List<Fragment> fragments) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction tx = fm.beginTransaction();
-        tx.add(R.id.frameLayout,new DiscoveryFragment());
+        tx.add(R.id.frameLayout,fragments.get(0));
         tx.commit();
     }
 

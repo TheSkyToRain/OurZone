@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include layout="@layout/toolbar"/>
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/comment_editText"
+        android:gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="5dp"
+        android:maxLength="100"
+        android:lineSpacingExtra="3dp"
+        android:background="@null"
+        android:inputType="textMultiLine"
+        android:hint="评论一下"
+        app:met_primaryColor="@color/thirdColor"
+        app:met_maxCharacters="100"/>
+    <Button
+        android:id="@+id/btn_comment"
+        android:text="评论"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:background="@drawable/button_shape"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</LinearLayout>

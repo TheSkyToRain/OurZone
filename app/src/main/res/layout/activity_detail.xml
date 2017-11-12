@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
     <include layout="@layout/toolbar"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_margin="5dp"
         android:layout_width="match_parent"
@@ -43,6 +52,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <ImageButton
+            android:layout_marginLeft="100dp"
             android:id="@+id/chat"
             android:scaleType="centerCrop"
             android:src="@drawable/mail"
@@ -105,7 +115,7 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:layout_gravity="center_vertical"
-                android:id="@+id/detail_comments"
+                android:id="@+id/detail_comment"
                 android:scaleType="centerCrop"
                 android:src="@drawable/comment"
                 android:layout_width="15dp"
@@ -126,4 +136,19 @@
         android:layout_width="match_parent"
         android:layout_height="1dp">
     </LinearLayout>
+    <TextView
+        android:layout_marginLeft="3dp"
+        android:text="评论如下:"
+        android:textSize="12sp"
+        android:textColor="#5000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/commentRV"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
+</ScrollView>
 </LinearLayout>

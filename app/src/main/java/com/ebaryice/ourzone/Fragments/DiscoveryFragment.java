@@ -2,6 +2,8 @@ package com.ebaryice.ourzone.Fragments;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +24,7 @@ import com.ebaryice.ourzone.Bean.StoryBean;
 import com.ebaryice.ourzone.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,6 +54,8 @@ public class DiscoveryFragment extends BaseFragment {
     @Override
     protected void initialize() {
         toolbar_text.setText("发现");
+        refreshLayout.setColorSchemeColors(Color.parseColor("#29b6f6"));
+        refreshLayout.setProgressViewEndTarget(true,150);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,16 +63,20 @@ public class DiscoveryFragment extends BaseFragment {
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        refresh();
-        refreshLayout.setColorSchemeColors(Color.parseColor("#29b6f6"));
-        refreshLayout.setProgressViewEndTarget(true,150);
+        refreshLayout.setRefreshing(true);
+        loading();
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refresh();
-                refreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
     }
 
     @Override
@@ -76,7 +85,27 @@ public class DiscoveryFragment extends BaseFragment {
         user = ((MainActivity)activity).getAVUser();
     }
 
-    private void refresh(){
+    public void refresh(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                }catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading();
+                        adapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
+    }
+    private void loading(){
         final List<StoryBean> storyBeans = new ArrayList<>();
         AVQuery<AVObject> query = new AVQuery<>("Story");
         query.findInBackground(new FindCallback<AVObject>() {
@@ -96,6 +125,7 @@ public class DiscoveryFragment extends BaseFragment {
                     bean.setObjectId(list.get(i).getObjectId());
                     storyBeans.add(bean);
                 }
+                Collections.reverse(storyBeans);
                 adapter = new StoryRVAdapter(storyBeans,getActivity(),user);
                 recyclerView.setAdapter(adapter);
             }

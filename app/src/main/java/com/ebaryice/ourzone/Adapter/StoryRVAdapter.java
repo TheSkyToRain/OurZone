@@ -53,8 +53,8 @@ public class StoryRVAdapter extends RecyclerView.Adapter<StoryRVAdapter.MyViewHo
         holder.time.setText(beans.get(position).getTime());
         Glide.with(context).load(beans.get(position).getIcon()).asBitmap().into(holder.icon);
         Glide.with(context).load(beans.get(position).getPicture()).into(holder.contentImg);
-        holder.like_num.setText(beans.get(position).getNum_like()+"");
-        holder.comment_num.setText(beans.get(position).getNum_comment()+"");
+        holder.like_num.setText(beans.get(position).getUserLiked().size()+"");
+        holder.comment_num.setText(beans.get(position).getCommentsList().size()+"");
         //判断是否已经点赞过
         if (user != null){
             if (beans.get(position).getUserLiked().contains(user.getObjectId())){
@@ -104,8 +104,7 @@ public class StoryRVAdapter extends RecyclerView.Adapter<StoryRVAdapter.MyViewHo
                         bean.getUserLiked().add(user.getObjectId());
                         notifyDataSetChanged();
                         Glide.with(context).load(R.drawable.like).into(holder.likes);
-                        Log.d("likelike",bean.getUserLiked().size()+"个");
-                        holder.like_num.setText(String.format(context.getResources().getString(R.string.likes),bean.getUserLiked().size()));
+                        holder.like_num.setText(bean.getUserLiked().size()+"");
                         //网络后台操作
                         updateCloud(bean.getObjectId(),bean.getNum_like()+1,bean.getUserLiked());
                     }

@@ -6,9 +6,11 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVIMClientParcel;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
+import com.avos.avoscloud.im.v2.AVIMClient;
 import com.ebaryice.ourzone.Basics.BaseActivity;
 import com.ebaryice.ourzone.CustomUserProvider;
 import com.ebaryice.ourzone.R;
@@ -37,9 +39,9 @@ public class StartActivity extends BaseActivity {
         Log.d("AVCloud","初始化成功");
         // 初始化参数依次为 this, AppId, AppKey
         AVOSCloud.initialize(getActivity(),"1gsStpMGOIbiVQJMJ7GRho1R-gzGzoHsz","pvXUhF0qEA7Jdo5K4knCxHDE");
-
+        AVIMClient.setUnreadNotificationEnabled(true);
         LCChatKit.getInstance().setProfileProvider(CustomUserProvider.getInstance());
-        LCChatKit.getInstance().init(getApplicationContext(),"1gsStpMGOIbiVQJMJ7GRho1R-gzGzoHsz","pvXUhF0qEA7Jdo5K4knCxHDE");
+        LCChatKit.getInstance().init(getActivity().getApplicationContext(),"1gsStpMGOIbiVQJMJ7GRho1R-gzGzoHsz","pvXUhF0qEA7Jdo5K4knCxHDE");
 
         SharedPreferences pref = getSharedPreferences("currenUser",MODE_PRIVATE);
         String username = pref.getString("username","");
@@ -49,6 +51,7 @@ public class StartActivity extends BaseActivity {
         }
         skip();
     }
+
 
     private void preSignIn(String username, String password) {
         AVUser.logInInBackground(username, password, new LogInCallback<AVUser>() {

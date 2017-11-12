@@ -35,12 +35,15 @@
         </activity>
         <!-- 反馈组件 END -->
         <activity android:name=".Activities.MainActivity"/>
+        <activity android:name=".Activities.CommentActivity"/>
         <activity android:name=".Activities.SignInActivity"/>
-        <activity android:name=".Activities.DetailActivity"/>
+        <activity android:name=".Activities.DetailActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Activities.PushActivity"/>
         <activity android:name=".Activities.PhotoDetailActivity"/>
         <activity android:name=".Activities.SignUpActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:screenOrientation="portrait"/>
         <!--相机使用-->
         <provider

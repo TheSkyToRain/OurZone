@@ -89,8 +89,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                     Toast.makeText(getActivity(),"登录成功",Toast.LENGTH_SHORT).show();
                     getActivity().finish();
                 }else{
-                    Log.d("gg",e.toString());
-                    Toast.makeText(getActivity(),"密码错误或用户名不存在",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_SHORT).show();
                 }
             }
         });

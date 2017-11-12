@@ -64,6 +64,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     private String imagePath = null;
     public static final int CHOOSE_PHOTO = 2;
     private Bitmap bitmap;
+    private int isOnclick = 0;
 
     @Override
     protected int getContentViewId() {
@@ -93,8 +94,8 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                 String password = signUp_password.getText().toString();
                 String autograph = signUp_autograph.getText().toString();
                 if (username.length() < 11 || nickname.length() == 0
-                        || password.length()<6 || autograph.length() == 0 || signUp_icon.getDrawable().getCurrent().getConstantState()==
-                        getResources().getDrawable(R.drawable.icon).getConstantState()){
+                        || password.length()<6 || autograph.length() == 0
+                        || isOnclick == 0){
                     Toast.makeText(getActivity(),"信息未完善",Toast.LENGTH_SHORT).show();
                 }else{
                     signUp(username,password,nickname,autograph,bitmap);
@@ -172,6 +173,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         switch (requestCode){
             case CHOOSE_PHOTO:
                 if (resultCode == RESULT_OK){
+                    isOnclick = 1;
                     if (Build.VERSION.SDK_INT>=19){
                         // 4.4 及以上版本系统用该方法处理图片
                         bitmap = handleImageOnKitkat(data);
@@ -180,6 +182,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                     }
                 }
                 else if (resultCode == RESULT_CANCELED){
+                    isOnclick = 0;
                     Toast.makeText(this,"取消",Toast.LENGTH_SHORT).show();
                     return;
                 }

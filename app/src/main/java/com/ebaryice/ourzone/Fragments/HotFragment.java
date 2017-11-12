@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
@@ -46,17 +47,23 @@ public class HotFragment extends BaseFragment {
     @Override
     protected void initialize() {
         toolbar_text.setText("热门");
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        refresh();
         refreshLayout.setColorSchemeColors(Color.parseColor("#29b6f6"));
         refreshLayout.setProgressViewEndTarget(true,150);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        refreshLayout.setRefreshing(true);
+        loading();
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refresh();
-                refreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
     }
 
     @Override
@@ -65,16 +72,32 @@ public class HotFragment extends BaseFragment {
         user = ((MainActivity)activity).getAVUser();
     }
 
-    private void refresh(){
+    public void refresh(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                }catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading();
+                        adapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
+    }
+    private void loading(){
         final List<StoryBean> storyBeans = new ArrayList<>();
-
-        final List<StoryBean> orderStories = new ArrayList<>();
-
         AVQuery<AVObject> query = new AVQuery<>("Story");
         query.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
-                int [] a = new int[list.size()];
                 for (int i=0;i<list.size();i++){
                     StoryBean bean = new StoryBean();
                     bean.setIcon(list.get(i).getString("userIcon"));
@@ -89,56 +112,46 @@ public class HotFragment extends BaseFragment {
                     bean.setObjectId(list.get(i).getObjectId());
                     storyBeans.add(bean);
                 }
-
-                //快速排序
-                for (int j=0;j<list.size();j++){
-                    StoryBean bean = storyBeans.get(j);
-                    a[j] = bean.getNum_comment()+bean.getNum_like();
+                int[] sum = new int[storyBeans.size()];
+                //计算总数
+                for (int i=0;i<storyBeans.size();i++){
+                    StoryBean bean = storyBeans.get(i);
+                    sum[i] = bean.getCommentsList().size()+bean.getUserLiked().size();
                 }
-                sort(a,0,a.length-1);
-
-                for (int k=0;k<list.size();k++){
-                    for (int l=0;l<list.size();l++){
-                        StoryBean bean = storyBeans.get(l);
-                        if (bean.getNum_like()+bean.getNum_comment() == a[storyBeans.size()-1-k]){
-                            orderStories.add(bean);
-                            continue;
+                //排序
+                int k,temp;
+                for (int i=0;i<storyBeans.size()-1;i++){
+                    k = i;
+                    for (int j=i+1;j<storyBeans.size();j++){
+                        if (sum[j]>sum[k]) k=j;
+                    }
+                    if (k!=i){
+                        temp = sum[k];
+                        sum[k] = sum[i];
+                        sum[i] = temp;
+                    }
+                }
+                //重新加data
+                List<StoryBean> beans = new ArrayList<>();
+                int[] sum1 = new int[storyBeans.size()];
+                //计算总数
+                for (int i=0;i<storyBeans.size();i++){
+                    StoryBean bean = storyBeans.get(i);
+                    sum1[i] = bean.getCommentsList().size()+bean.getUserLiked().size();
+                }
+                for (int i=0;i<sum.length;i++){
+                    for (int j=0;j<sum.length;j++){
+                        if (sum1[j] == sum[i]){
+                            beans.add(storyBeans.get(j));
+                            sum1[j] = -1;
+                            break;
                         }
                     }
                 }
-
-                adapter = new StoryRVAdapter(orderStories,getActivity(),user);
+                Log.d("beanSize",beans.size()+"");
+                adapter = new StoryRVAdapter(beans,getActivity(),user);
                 recyclerView.setAdapter(adapter);
             }
         });
-    }
-
-
-    private void sort(int[] a,int low,int high){
-        int start = low;
-        int end = high;
-        int key = a[low];
-        while(end>start){
-            //从后往前比较
-            while(end>start&&a[end]>=key)  //如果没有比关键值小的，比较下一个，直到有比关键值小的交换位置，然后又从前往后比较
-                end--;
-            if(a[end]<=key){
-                int temp = a[end];
-                a[end] = a[start];
-                a[start] = temp;
-            }
-            //从前往后比较
-            while(end>start&&a[start]<=key)//如果没有比关键值大的，比较下一个，直到有比关键值大的交换位置
-                start++;
-            if(a[start]>=key){
-                int temp = a[start];
-                a[start] = a[end];
-                a[end] = temp;
-            }
-            //此时第一次循环比较结束，关键值的位置已经确定了。左边的值都比关键值小，右边的值都比关键值大，但是两边的顺序还有可能是不一样的，进行下面的递归调用
-        }
-        //递归
-        if(start>low) sort(a,low,start-1);//左边序列。第一个索引位置到关键值索引-1
-        if(end<high) sort(a,end+1,high);//右边序列。从关键值索引+1到最后一个
     }
 }
