@@ -20,7 +20,7 @@
         app:met_maxCharacters="100"/>
     <Button
         android:id="@+id/btn_comment"
-        android:text="评论"
+        android:text="发布"
         android:textSize="20sp"
         android:textColor="#fff"
         android:background="@drawable/button_shape"

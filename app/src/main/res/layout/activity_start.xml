@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#00a1ec">
+
     <ImageView
         android:id="@+id/start_imgview"
-        android:src="@drawable/demo"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="144dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/start_img" />
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/start_imgview"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="Welcome to Our Zone !"
+        android:textColor="#fff"
+        android:textSize="25sp" />
+</RelativeLayout>

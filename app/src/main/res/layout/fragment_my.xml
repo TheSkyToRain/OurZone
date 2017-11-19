@@ -56,8 +56,8 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"
@@ -125,7 +125,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/about"
+        android:id="@+id/update"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="1dp"
@@ -135,14 +135,4 @@
         android:text="  关于软件"
         android:textColor="#000"
         android:textSize="16sp" />
-    <Button
-        android:id="@+id/logOut"
-        android:text="退出登录"
-        android:layout_gravity="bottom"
-        android:textSize="18sp"
-        android:layout_marginTop="30dp"
-        android:background="#d81e06"
-        android:textColor="#fff"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
 </LinearLayout>

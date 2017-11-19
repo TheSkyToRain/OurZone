@@ -1,6 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</android.support.constraint.ConstraintLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include layout="@layout/toolbar"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/change_icon"
+                android:src="@drawable/icon"
+                android:scaleType="centerCrop"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="15dp"
+                android:layout_gravity="center_horizontal"
+                app:riv_border_color="#fff"
+                app:riv_border_width="1dp"
+                app:riv_corner_radius="15dp"
+                app:riv_oval="true"/>
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/change_nickname"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:padding="5dp"
+                android:hint="你的昵称"
+                android:maxLength="12"
+                android:maxLines="1"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:met_primaryColor="@color/thirdColor"
+                app:met_maxCharacters="12"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="怎么可以没昵称呢"
+                app:met_clearButton="true"/>
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/change_autograph"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:padding="5dp"
+                android:hint="你的签名"
+                android:maxLength="35"
+                android:inputType="textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:met_primaryColor="@color/thirdColor"
+                app:met_maxCharacters="35"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="描述一下你自己吧"
+                app:met_clearButton="true"/>
+            <Button
+                android:id="@+id/change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_shape"
+                android:text="保存"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

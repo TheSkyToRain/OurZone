@@ -25,5 +25,5 @@
         android:layout_marginBottom="80dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/addstory"
-        app:layout_behavior="com.ebaryice.ourzone.Behavior.FabBehavior" />
+        app:layout_behavior="com.ebaryice.ourzone.behavior.FabBehavior" />
 </android.support.design.widget.CoordinatorLayout>
