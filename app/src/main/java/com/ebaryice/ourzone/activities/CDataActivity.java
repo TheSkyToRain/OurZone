@@ -1,6 +1,7 @@
 package com.ebaryice.ourzone.activities;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
@@ -96,6 +97,11 @@ public class CDataActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void save(String nickname, String autograph, Bitmap bitmap){
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("正在修改，请稍等");
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         AVUser user = AVUser.getCurrentUser();
         user.put("nickname",nickname);
         user.put("autograph",autograph);
@@ -111,11 +117,13 @@ public class CDataActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void done(AVException e) {
                 if (e == null){
+                    progressDialog.dismiss();
                     Toast.makeText(getActivity(),"保存成功",Toast.LENGTH_SHORT).show();
                     finish();
                     if (listener != null) listener.onFinish("ok");
                 }
                 else{
+                    progressDialog.dismiss();
                     Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_SHORT).show();
 
                 }

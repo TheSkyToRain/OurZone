@@ -1,5 +1,6 @@
 package com.ebaryice.ourzone.activities;
 
+import android.app.ProgressDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -32,6 +33,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
     @BindView(R.id.btn_back)
     ImageButton back;
     private StoryBean bean;
+    ProgressDialog progressDialog;
     @Override
     protected int getContentViewId() {
         return R.layout.activity_comment;
@@ -58,9 +60,14 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
                 realComment = realComment+" : "+comment;
                 if (comment.isEmpty()) Toast.makeText(this,"评论不能为空",Toast.LENGTH_SHORT).show();
                 else {
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setTitle("正在发布，请稍等");
+                    progressDialog.setMessage("Loading...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
                     uploadComment(realComment,bean.getObjectId(),bean.getCommentsList());
-                    finish();
                     Toast.makeText(this,"评论成功",Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 break;
             default:
@@ -71,5 +78,6 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         comments.add(comment);
         todo.put("commentsList",comments);
         todo.saveInBackground();
+        progressDialog.dismiss();
     }
 }

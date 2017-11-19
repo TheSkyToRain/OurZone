@@ -3,6 +3,7 @@ package com.ebaryice.ourzone.activities;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -80,6 +81,7 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
     List<String> commentsList = new ArrayList<>();
     private AVUser user;
     private int isOnclick = 0;
+    ProgressDialog progressDialog;
 
     @Override
     protected int getContentViewId() {
@@ -110,6 +112,11 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
                 if (contentText.isEmpty() || isOnclick == 0){
                     Toast.makeText(getActivity(),"你还没有编辑完整..",Toast.LENGTH_SHORT).show();
                 } else{
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setTitle("正在发布，请稍等");
+                    progressDialog.setMessage("Loading...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
                     if (tag == 0){
                         try {
                             upLoad(contentText,getRealFilePath(this,imageUri));
@@ -179,6 +186,7 @@ public class PushActivity extends BaseActivity implements View.OnClickListener{
                 object.saveInBackground();
             }
         });
+        progressDialog.dismiss();
         getActivity().finish();
     }
 
