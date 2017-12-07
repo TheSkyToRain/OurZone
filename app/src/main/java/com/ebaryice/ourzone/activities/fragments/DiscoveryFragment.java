@@ -2,6 +2,8 @@ package com.ebaryice.ourzone.activities.fragments;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,10 +78,11 @@ public class DiscoveryFragment extends BaseFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         refresh();
     }
+
 
     @Override
     public void onAttach(Activity activity) {

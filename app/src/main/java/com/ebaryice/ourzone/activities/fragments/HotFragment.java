@@ -2,6 +2,8 @@ package com.ebaryice.ourzone.activities.fragments;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,8 +63,8 @@ public class HotFragment extends BaseFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         refresh();
     }
 

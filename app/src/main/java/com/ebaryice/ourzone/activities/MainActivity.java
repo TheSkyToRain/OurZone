@@ -72,12 +72,12 @@ public class MainActivity extends BaseActivity {
                         FragmentManager fm = getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
                         Fragment fragment = fragments.get(position);
-//                        if (fragment.isAdded()){
-//                            ft.show(fragment);
-//                        }else{
-//                            ft.add(R.id.frameLayout,fragment);
-//                        }
-                        ft.replace(R.id.frameLayout,fragment);
+                        if (fragment.isAdded()){
+                            ft.show(fragment);
+                        }else{
+                            ft.add(R.id.frameLayout,fragment);
+                        }
+//                        ft.replace(R.id.frameLayout,fragment);
                         ft.commit();
                     }
                 }
@@ -85,15 +85,15 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onTabUnselected(int position) {
-//                if (fragments != null){
-//                    if (position < fragments.size()){
-//                        FragmentManager fm = getSupportFragmentManager();
-//                        FragmentTransaction ft = fm.beginTransaction();
-//                        Fragment fragment = fragments.get(position);
-//                        ft.hide(fragment);
-//                        ft.commit();
-//                    }
-//                }
+                if (fragments != null){
+                    if (position < fragments.size()){
+                        FragmentManager fm = getSupportFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+                        Fragment fragment = fragments.get(position);
+                        ft.hide(fragment);
+                        ft.commit();
+                    }
+                }
             }
 
             @Override
